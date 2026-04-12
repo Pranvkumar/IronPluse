@@ -1,0 +1,8 @@
+IronPulse Pro - Invoice
+-----------------------
+Invoice ID: PAY-371539CE
+Member ID: MEM-1005
+Amount: 55.00
+Status: PAID
+Timestamp: 2026-04-12T14:21:44.864999137
+Receipt: Receipt | Member: Isha Gupta | Plan: VIP | Amount: 55.00 | Status: PAID | Time: 2026-04-12T14:21:44.864768316

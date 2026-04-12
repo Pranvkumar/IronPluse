@@ -1,0 +1,8 @@
+IronPulse Pro - Invoice
+-----------------------
+Invoice ID: PAY-2605E952
+Member ID: MEM-1001
+Amount: 55.00
+Status: PAID
+Timestamp: 2026-04-12T14:21:20.071373555
+Receipt: Receipt | Member: Riya Sharma | Plan: Premium | Amount: 55.00 | Status: PAID | Time: 2026-04-12T14:21:20.065814857

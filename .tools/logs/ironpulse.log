@@ -1,0 +1,9 @@
+[IronPulse] Starting UI bootstrap...
+[IronPulse] Launch mode: JavaFX (preferred)
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.glass.utils.NativeLibLoader in module javafx.graphics (file:/workspaces/180869680/IronPluse/lib/javafx-graphics-21.0.5-linux.jar)
+WARNING: Use --enable-native-access=javafx.graphics to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+[IronPulse] JavaFX launch failed, falling back to Swing: Unable to load glass GTK library.
+[IronPulse] Launch mode: Swing (fallback)
