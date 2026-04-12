@@ -1,6 +1,6 @@
-# IronPulse Pro
+# IronPulse 
 
-IronPulse Pro is a Java OOP-based Gym Membership Management System with a Swing dashboard UI.
+IronPulse is a Java OOP-based Gym Membership Management System with a Swing dashboard UI.
 
 ## Features
 
