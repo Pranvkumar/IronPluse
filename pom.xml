@@ -39,14 +39,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-
-
-        <!-- Spring Boot Security -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
         <!-- JWT Token Support -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

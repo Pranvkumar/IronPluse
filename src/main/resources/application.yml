@@ -8,11 +8,6 @@ spring:
       database: ${DB_NAME:ironpulse}
       auto-index-creation: true
   
-  security:
-    user:
-      name: ${ADMIN_USERNAME:admin}
-      password: ${ADMIN_PASSWORD:ironpulse123}
-  
   servlet:
     multipart:
       max-file-size: 10MB
@@ -20,8 +15,6 @@ spring:
 
 server:
   port: ${PORT:8080}
-  servlet:
-    context-path: /api
   error:
     include-message: always
     include-stacktrace: on_param
@@ -41,7 +34,6 @@ logging:
   level:
     root: ${LOG_LEVEL:INFO}
     com.ironpulse: DEBUG
-    org.springframework.security: DEBUG
     org.mongodb: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
