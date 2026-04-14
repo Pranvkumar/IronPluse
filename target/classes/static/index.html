@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IronPulse Web</title>
+  <style>
+    :root {
+      --bg1: #f2f7ff;
+      --bg2: #fff5ef;
+      --card: #ffffff;
+      --ink: #122033;
+      --muted: #5f6e7f;
+      --accent: #0b6dd8;
+      --ok: #09824b;
+      --warn: #9c6a00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(1200px 600px at 10% -10%, #d9ebff 0, transparent 50%),
+                  radial-gradient(1200px 600px at 110% 110%, #ffe5d3 0, transparent 50%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    .hero {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(16, 27, 46, 0.08);
+      border: 1px solid #e6eef8;
+    }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    p { margin: 0; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid #e6eef8;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 6px 14px rgba(16, 27, 46, 0.06);
+    }
+    .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .value { font-size: 26px; font-weight: 700; margin-top: 6px; }
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+    .row {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .status {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>IronPulse Web Frontend</h1>
+      <p>Local frontend is live. Data loads from the REST API endpoints.</p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="label">Total Members</div>
+          <div id="totalMembers" class="value">-</div>
+        </div>
+        <div class="card">
+          <div class="label">Active Members</div>
+          <div id="activeMembers" class="value ok">-</div>
+        </div>
+        <div class="card">
+          <div class="label">Total Revenue</div>
+          <div id="totalRevenue" class="value warn">-</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="refreshBtn" type="button">Refresh Dashboard</button>
+        <button id="membersBtn" type="button">Load Members Count</button>
+      </div>
+      <div id="status" class="status">Waiting for API...</div>
+    </section>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const totalMembersEl = document.getElementById('totalMembers');
+    const activeMembersEl = document.getElementById('activeMembers');
+    const totalRevenueEl = document.getElementById('totalRevenue');
+
+    async function loadDashboard() {
+      statusEl.textContent = 'Loading /api/dashboard/overview ...';
+      try {
+        const r = await fetch('/api/dashboard/overview');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        totalMembersEl.textContent = data.totalMembers ?? 0;
+        activeMembersEl.textContent = data.activeMembers ?? 0;
+        totalRevenueEl.textContent = (data.totalRevenue ?? 0).toFixed(2);
+        statusEl.textContent = 'Dashboard loaded successfully.';
+      } catch (e) {
+        statusEl.textContent = 'API unavailable. If MongoDB is down, this can fail until MONGO_URI is configured.';
+      }
+    }
+
+    async function loadMembers() {
+      statusEl.textContent = 'Loading /api/members ...';
+      try {
+        const r = await fetch('/api/members');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        statusEl.textContent = 'Members loaded: ' + data.length;
+      } catch (e) {
+        statusEl.textContent = 'Members API failed. Check backend logs.';
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadDashboard);
+    document.getElementById('membersBtn').addEventListener('click', loadMembers);
+    loadDashboard();
+  </script>
+</body>
+</html>
