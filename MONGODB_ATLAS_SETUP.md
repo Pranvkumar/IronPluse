@@ -1,12 +1,12 @@
 # MongoDB Atlas Setup Guide for IronPulse
 
-## 📋 Prerequisites
-- MongoDB Atlas account (you have this ✅)
+##  Prerequisites
+- MongoDB Atlas account (you have this )
 - Active cluster (Finmind - currently provisioning)
 
 ---
 
-## 🚀 Step 1: Wait for Cluster to be Ready
+##  Step 1: Wait for Cluster to be Ready
 
 Your **Finmind** cluster is currently provisioning. This takes 1-3 minutes.
 
@@ -17,7 +17,7 @@ Your **Finmind** cluster is currently provisioning. This takes 1-3 minutes.
 
 ---
 
-## 🔑 Step 2: Create Database User
+##  Step 2: Create Database User
 
 Once cluster is ready:
 
@@ -34,7 +34,7 @@ Once cluster is ready:
 
 ---
 
-## 🌐 Step 3: Get Connection String
+##  Step 3: Get Connection String
 
 1. In **Finmind** cluster, click **"Connect"** button
 2. Choose **"Drivers"**
@@ -53,7 +53,7 @@ mongodb+srv://ironpulse_user:YOUR_PASSWORD@finmind.xxxxx.mongodb.net/ironpulse?r
 
 ---
 
-## 📝 Step 4: Configure Environment Variables
+##  Step 4: Configure Environment Variables
 
 ### On Render:
 
@@ -75,7 +75,7 @@ MONGO_URI=mongodb+srv://ironpulse_user:YOUR_PASSWORD@finmind.xxxxx.mongodb.net/i
 
 ---
 
-## 🔐 Step 5: Configure Network Access
+##  Step 5: Configure Network Access
 
 **Important for Render deployment:**
 
@@ -86,7 +86,7 @@ MONGO_URI=mongodb+srv://ironpulse_user:YOUR_PASSWORD@finmind.xxxxx.mongodb.net/i
    - Add comment: "Render deployment"
 4. Click **"Confirm"**
 
-⚠️ **Security Note:** For production, whitelist specific Render IPs instead.
+️ **Security Note:** For production, whitelist specific Render IPs instead.
 
 ---
 
@@ -103,7 +103,7 @@ The application will auto-create collections, but you can pre-create them:
 
 ---
 
-## ✅ Step 7: Test Connection
+##  Step 7: Test Connection
 
 ### Test connection locally:
 ```bash
@@ -119,7 +119,7 @@ java -cp "lib/*:out" com.ironpulse.MongoTest
 
 ---
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### Connection Error: "Authentication failed"
 - Verify username/password in connection string
@@ -136,7 +136,7 @@ java -cp "lib/*:out" com.ironpulse.MongoTest
 
 ---
 
-## 🔄 Render Deployment Integration
+##  Render Deployment Integration
 
 The REST API will automatically:
 1. Read `MONGO_URI` environment variable
@@ -148,7 +148,7 @@ No additional configuration needed after setting `MONGO_URI`!
 
 ---
 
-## 📚 Useful Resources
+##  Useful Resources
 
 - [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
 - [Java Driver Connection Guide](https://www.mongodb.com/docs/drivers/java/sync/current/quick-start/connect-to-mongodb/)

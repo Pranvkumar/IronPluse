@@ -1,17 +1,17 @@
 # IronPulse Pro - Quick Start Guide
 
-## 🎯 What's New?
+##  What's New?
 
 Your IronPulse Pro Gym Management System now includes:
 
-✅ **HTML/CSS Styled UI** - Beautiful, modern dashboard with gradient backgrounds
-✅ **MongoDB Integration** - Persistent data storage with automatic sync
-✅ **Styled Components** - Professional cards, alerts, and panels
-✅ **Auto-Save** - Members and payments save to MongoDB automatically
+ **HTML/CSS Styled UI** - Beautiful, modern dashboard with gradient backgrounds
+ **MongoDB Integration** - Persistent data storage with automatic sync
+ **Styled Components** - Professional cards, alerts, and panels
+ **Auto-Save** - Members and payments save to MongoDB automatically
 
 ---
 
-## ⚡ 5-Minute Setup
+##  5-Minute Setup
 
 ### Step 1: Start MongoDB
 Choose your platform:
@@ -51,11 +51,11 @@ java -cp "lib/*:out" ironpulse.Main
 - **Username:** `admin`
 - **Password:** `ironpulse123`
 
-✓ **Done!** You're ready to use IronPulse Pro!
+ **Done!** You're ready to use IronPulse Pro!
 
 ---
 
-## 📊 New Features Overview
+##  New Features Overview
 
 ### 1. **Styled Dashboard**
 - Beautiful stat cards with hover effects
@@ -71,9 +71,9 @@ Collections:
 ```
 
 **Automatic Operations:**
-- ✓ New member added → Saved to MongoDB
-- ✓ Payment processed → Saved to MongoDB
-- ✓ Member updated → Updated in MongoDB
+-  New member added → Saved to MongoDB
+-  Payment processed → Saved to MongoDB
+-  Member updated → Updated in MongoDB
 
 ### 3. **HTML/CSS Components**
 
@@ -100,7 +100,7 @@ JPanel member = StyledPanelBuilder.createMemberCard(
 
 ---
 
-## 🔄 Data Flow
+##  Data Flow
 
 ### When You Add a Member:
 ```
@@ -109,7 +109,7 @@ JPanel member = StyledPanelBuilder.createMemberCard(
 3. ↓ Saved to in-memory (GymManager)
 4. ↓ Saved to MongoDB
 5. ↓ Dashboard refreshes
-6. ✓ Member appears in table
+6.  Member appears in table
 ```
 
 ### When You Process a Payment:
@@ -120,35 +120,35 @@ JPanel member = StyledPanelBuilder.createMemberCard(
 4. ↓ Saved to in-memory (GymManager)
 5. ↓ Saved to MongoDB
 6. ↓ Invoice generated
-7. ✓ Payment appears in payments table
+7.  Payment appears in payments table
 ```
 
 ---
 
-## 📁 File Structure
+##  File Structure
 
 ### New Files:
 ```
 src/ironpulse/
 ├── storage/
-│   └── MongoDBConnection.java  ✨ NEW
+│   └── MongoDBConnection.java   NEW
 ├── ui/
-│   ├── StyledUIComponent.java   ✨ NEW
-│   ├── StyledPanelBuilder.java  ✨ NEW
+│   ├── StyledUIComponent.java    NEW
+│   ├── StyledPanelBuilder.java   NEW
 │   └── MainFrame.java           ⭐ UPDATED
 ```
 
 ### Documentation:
 ```
 IronPulse/
-├── MONGODB_SETUP.md             ✨ NEW (detailed setup guide)
-├── INTEGRATION_EXAMPLES.java    ✨ NEW (code examples)
-└── QUICK_START.md               ✨ NEW (this file)
+├── MONGODB_SETUP.md              NEW (detailed setup guide)
+├── INTEGRATION_EXAMPLES.java     NEW (code examples)
+└── QUICK_START.md                NEW (this file)
 ```
 
 ---
 
-## 💾 Data Persistence
+##  Data Persistence
 
 ### What Gets Saved to MongoDB?
 
@@ -181,7 +181,7 @@ IronPulse/
 
 ---
 
-## 🎨 UI Themes
+##  UI Themes
 
 ### Available Themes:
 - **Light Mode** (Default)
@@ -195,7 +195,7 @@ IronPulse/
 
 ---
 
-## 🔧 Configuration
+##  Configuration
 
 ### Change MongoDB Connection:
 Edit `src/ironpulse/storage/MongoDBConnection.java`:
@@ -215,7 +215,7 @@ private static final String DATABASE_NAME = "ironpulse_db";
 
 ---
 
-## ✅ Verification
+##  Verification
 
 ### Check MongoDB Connection:
 ```bash
@@ -228,15 +228,15 @@ mongosh
 ### Check Console Logs:
 Look for these messages when you start the app:
 ```
-✓ Connected to MongoDB successfully
-✓ MongoDB integration initialized successfully
-✓ Member saved to MongoDB: MEM-12345
-✓ Payment saved to MongoDB: PAY-98765
+ Connected to MongoDB successfully
+ MongoDB integration initialized successfully
+ Member saved to MongoDB: MEM-12345
+ Payment saved to MongoDB: PAY-98765
 ```
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### MongoDB Not Starting?
 ```bash
@@ -262,14 +262,14 @@ javac -cp "lib/*:src" -d out src/ironpulse/**/*.java
 
 ### Connection Refused?
 ```
-✗ MongoDB connection failed: Connection refused
+ MongoDB connection failed: Connection refused
 → Ensure MongoDB is running: mongosh
 → Before starting the application
 ```
 
 ---
 
-## 📖 Usage Examples
+##  Usage Examples
 
 ### View All Members in MongoDB:
 ```bash
@@ -297,7 +297,7 @@ mongosh
 
 ---
 
-## 🚀 Next Steps
+##  Next Steps
 
 1. **Start the app:** `java -cp "lib/*:out" ironpulse.Main`
 2. **Add members:** Click "Member Management" → "Add Member"
@@ -307,14 +307,14 @@ mongosh
 
 ---
 
-## 📞 Need Help?
+##  Need Help?
 
 Check the detailed setup guide: `MONGODB_SETUP.md`
 View code examples: `INTEGRATION_EXAMPLES.java`
 
 ---
 
-## 📋 Checklist
+##  Checklist
 
 Before starting:
 - [ ] MongoDB installed
@@ -332,18 +332,18 @@ After starting:
 
 ---
 
-## 🎉 Success!
+##  Success!
 
 Your IronPulse Pro system with HTML/CSS styling and MongoDB is ready to use!
 
 **Features Summary:**
-✓ Beautiful modern UI
-✓ Persistent database storage
-✓ Auto-save functionality
-✓ Professional styling
-✓ Scalable architecture
+ Beautiful modern UI
+ Persistent database storage
+ Auto-save functionality
+ Professional styling
+ Scalable architecture
 
-**Happy gym managing! 🏋️💪**
+**Happy gym managing! ️**
 
 ---
 

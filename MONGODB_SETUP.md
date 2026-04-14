@@ -1,6 +1,6 @@
 # IronPulse Pro - MongoDB + HTML/CSS Integration Guide
 
-## 🚀 Setup Instructions
+##  Setup Instructions
 
 ### Prerequisites
 - MongoDB installed and running on `localhost:27017`
@@ -41,7 +41,7 @@ java -cp "lib/*:out" ironpulse.Main
 
 ---
 
-## 📊 Features
+##  Features
 
 ### HTML/CSS Styled UI Components
 The application now includes:
@@ -72,7 +72,7 @@ The application now includes:
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 IronPluse/
@@ -94,7 +94,7 @@ IronPluse/
 
 ---
 
-## 🔧 Configuration
+##  Configuration
 
 ### MongoDB Connection String
 Located in `MongoDBConnection.java`:
@@ -112,21 +112,21 @@ private static final String CONNECTION_STRING = "mongodb+srv://username:password
 
 ---
 
-## 📈 Usage Examples
+##  Usage Examples
 
 ### Adding a Member (Auto-saves to MongoDB)
 1. Click "Member Management"
 2. Click "Add Member"
 3. Fill in the form
 4. Click "Save"
-5. ✓ Member is saved to both in-memory storage AND MongoDB automatically
+5.  Member is saved to both in-memory storage AND MongoDB automatically
 
 ### Processing Payment (Auto-saves to MongoDB)
 1. Click "Payments"
 2. Click "Process Payment"
 3. Select member and enter amount
 4. Click "Save"
-5. ✓ Payment is recorded in both systems
+5.  Payment is recorded in both systems
 
 ### Viewing Stored Data
 ```bash
@@ -141,7 +141,7 @@ db.payments.find().pretty()
 
 ---
 
-## 🎨 HTML/CSS Features
+##  HTML/CSS Features
 
 The `StyledUIComponent.java` provides pre-built styled components:
 
@@ -165,11 +165,11 @@ StyledUIComponent.createAlertHTML("success", "Operation completed!")
 
 ---
 
-## 🔍 Troubleshooting
+##  Troubleshooting
 
 ### MongoDB Connection Failed
 ```
-✗ MongoDB connection failed: Connection refused
+ MongoDB connection failed: Connection refused
 ```
 **Solution:** Ensure MongoDB is running
 ```bash
@@ -202,7 +202,7 @@ java -cp "lib/*:out" ironpulse.Main
 
 ---
 
-## 📊 Database Schema
+##  Database Schema
 
 ### Members Collection
 ```json
@@ -235,7 +235,7 @@ java -cp "lib/*:out" ironpulse.Main
 
 ---
 
-## 🚀 Next Steps
+##  Next Steps
 
 1. **Backup Configuration** - Set up MongoDB backups
 2. **Advanced Queries** - Implement filtering and aggregation
@@ -245,7 +245,7 @@ java -cp "lib/*:out" ironpulse.Main
 
 ---
 
-## 📝 Notes
+##  Notes
 
 - All data operations automatically sync with MongoDB
 - In-memory storage remains as primary operation store
@@ -255,7 +255,7 @@ java -cp "lib/*:out" ironpulse.Main
 
 ---
 
-## 💡 Tips
+##  Tips
 
 - Check console logs for MongoDB operation confirmations
 - Use MongoDB Compass for visual database management
@@ -265,7 +265,7 @@ java -cp "lib/*:out" ironpulse.Main
 
 ---
 
-## 📞 Support
+##  Support
 
 For issues or questions:
 1. Check the console output for detailed error messages
