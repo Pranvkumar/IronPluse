@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: ironpulse-api
+  
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://localhost:27017/ironpulse}
+      database: ${DB_NAME:ironpulse}
+      auto-index-creation: true
+  
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+    include-stacktrace: on_param
+  shutdown: graceful
+  shutdown-wait-time: 30s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    com.ironpulse: DEBUG
+    org.mongodb: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:your-secret-key-here-min-32-characters-long}
+    expiration: 86400000
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:8080}

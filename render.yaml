@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ironpulse-api
+    runtime: java
+    runtimeVersion: 21
+    buildCommand: bash build-render.sh
+    startCommand: java -jar target/ironpulse-api-2.0-render.jar
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: MONGO_URI
+        sync: false
+      - key: JAVA_TOOL_OPTIONS
+        value: -Xmx512m -Xms256m
+      - key: ENVIRONMENT
+        value: production
