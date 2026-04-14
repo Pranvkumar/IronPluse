@@ -109,21 +109,6 @@
       margin-bottom: 3px;
     }
 
-    .hero-metrics {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-    }
-
-    .metric-pill {
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.26);
-      border-radius: 11px;
-      padding: 10px 13px;
-      font-size: 0.98rem;
-    }
-
     .auth-form-wrap {
       display: grid;
       place-items: center;
@@ -445,11 +430,6 @@
           <div class="hero-feature"><strong>Analytics</strong>Live revenue and conversion insights</div>
           <div class="hero-feature"><strong>Activity</strong>Recent actions visible across your team</div>
         </div>
-        <div class="hero-metrics">
-          <div class="metric-pill">All-in-one dashboard</div>
-          <div class="metric-pill">Desktop and mobile ready</div>
-          <div class="metric-pill">Deployment-ready</div>
-        </div>
       </div>
       <div class="small"></div>
     </aside>
@@ -724,6 +704,21 @@
       return response.json();
     }
 
+    async function requestWithRetry(path, options, retries = 1) {
+      let lastError = null;
+      for (let attempt = 0; attempt <= retries; attempt += 1) {
+        try {
+          return await request(path, options);
+        } catch (error) {
+          lastError = error;
+          if (attempt < retries) {
+            await new Promise(resolve => setTimeout(resolve, 300));
+          }
+        }
+      }
+      throw lastError;
+    }
+
     function money(n) {
       return "Rs " + Number(n || 0).toFixed(2);
     }
@@ -897,9 +892,9 @@
     async function refreshDashboardData() {
       try {
         const [overview, distribution, activities] = await Promise.all([
-          request("/api/dashboard/overview"),
-          request("/api/dashboard/members/distribution"),
-          request("/api/dashboard/activities/recent")
+          requestWithRetry("/api/dashboard/overview"),
+          requestWithRetry("/api/dashboard/members/distribution"),
+          requestWithRetry("/api/dashboard/activities/recent")
         ]);
         state.overview = overview || {};
         renderDashboard();
@@ -916,8 +911,8 @@
       const q = document.getElementById("memberSearch").value.trim();
       try {
         const data = q
-          ? await request("/api/members/search?query=" + encodeURIComponent(q))
-          : await request("/api/members");
+          ? await requestWithRetry("/api/members/search?query=" + encodeURIComponent(q))
+          : await requestWithRetry("/api/members");
         state.members = data || [];
         renderMembersTable(state.members);
         if (state.selectedMember) {
@@ -954,8 +949,8 @@
     async function loadReports() {
       try {
         const [revenue, memberStats] = await Promise.all([
-          request("/api/payments/stats/revenue"),
-          request("/api/members/stats/summary")
+          requestWithRetry("/api/payments/stats/revenue"),
+          requestWithRetry("/api/members/stats/summary")
         ]);
         renderReports(revenue || {}, memberStats || {});
       } catch (e) {
