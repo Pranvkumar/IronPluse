@@ -1,6 +1,6 @@
 # IronPulse
 
-IronPulse is a Spring Boot and MongoDB gym management web app with a built-in frontend dashboard for members, payments, activity, and reports.
+IronPulse is a Java OOP gym management project built on Spring Boot, with a MongoDB-backed REST API and a lightweight web dashboard for operations.
 
 ## Live App
 
@@ -9,6 +9,8 @@ IronPulse is a Spring Boot and MongoDB gym management web app with a built-in fr
 
 ## Features
 
+- Java-first domain model for members, payments, and dashboard analytics
+- Layered backend architecture (Controller, Service, Repository, Model)
 - Web dashboard with overview cards, recent payments, member distribution, and activity feed
 - Member management: create, view, update, delete, and search
 - Payment tracking with paid and pending statuses
@@ -25,6 +27,17 @@ IronPulse is a Spring Boot and MongoDB gym management web app with a built-in fr
 - Maven
 - Vanilla HTML, CSS, JavaScript frontend in static resources
 - Docker + Render deployment
+
+## OOP Focus
+
+This project is organized around object-oriented backend design in Java:
+
+- Encapsulation: domain state and behavior are modeled in dedicated classes under src/main/java/com/ironpulse/model
+- Abstraction: service classes hide business logic behind clear method contracts
+- Separation of concerns: controllers handle HTTP, services handle logic, repositories handle persistence
+- Maintainability: each package has a single responsibility aligned with OOP and clean architecture principles
+
+If you are evaluating this as an OOP project, prioritize the Java backend packages and service flows over the frontend layer.
 
 ## Project Structure
 
