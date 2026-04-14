@@ -40,12 +40,6 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
-        <!-- MongoDB Driver (sync) -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-sync</artifactId>
-            <version>5.1.4</version>
-        </dependency>
 
         <!-- Spring Boot Security -->
         <dependency>
@@ -77,13 +71,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-
-        <!-- JavaFX (for UI components if needed) -->
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>21.0.5</version>
         </dependency>
 
         <!-- Testing -->
