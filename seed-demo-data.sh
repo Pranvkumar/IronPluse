@@ -5,8 +5,6 @@
 # Usage: ./seed-demo-data.sh <RENDER_URL>
 # Example: ./seed-demo-data.sh https://ironpulse.onrender.com
 
-set -e
-
 # Color codes for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -34,7 +32,7 @@ echo ""
 # Function to check API connectivity
 check_api() {
     echo -e "${YELLOW}Checking API connectivity...${NC}"
-    if curl -s -f "$RENDER_URL/api/health" > /dev/null 2>&1 || curl -s -f "$RENDER_URL/" > /dev/null 2>&1; then
+    if curl -s -o /dev/null -w "%{http_code}" "$RENDER_URL/" | grep -q "200\|301\|302"; then
         echo -e "${GREEN}✓ API is reachable${NC}"
         return 0
     else
@@ -78,11 +76,14 @@ seed_members() {
     
     local count=0
     for member in "${members[@]}"; do
-        if curl -s -X POST "$RENDER_URL/api/members" \
+        response=$(curl -s -w "\n%{http_code}" -X POST "$RENDER_URL/api/members" \
             -H "Content-Type: application/json" \
-            -d "$member" > /dev/null 2>&1; then
+            -d "$member" 2>/dev/null)
+        http_code=$(echo "$response" | tail -n 1)
+        
+        if [[ "$http_code" == "201" ]] || [[ "$http_code" == "200" ]]; then
             ((count++))
-            echo -ne "\r${GREEN}✓${NC} Seeded $count member(s)"
+            echo -ne "\r${GREEN}✓${NC} Seeded $count member(s)   "
         fi
     done
     echo ""
@@ -118,11 +119,14 @@ seed_payments() {
     
     local count=0
     for payment in "${payments[@]}"; do
-        if curl -s -X POST "$RENDER_URL/api/payments" \
+        response=$(curl -s -w "\n%{http_code}" -X POST "$RENDER_URL/api/payments" \
             -H "Content-Type: application/json" \
-            -d "$payment" > /dev/null 2>&1; then
+            -d "$payment" 2>/dev/null)
+        http_code=$(echo "$response" | tail -n 1)
+        
+        if [[ "$http_code" == "201" ]] || [[ "$http_code" == "200" ]]; then
             ((count++))
-            echo -ne "\r${GREEN}✓${NC} Seeded $count payment(s)"
+            echo -ne "\r${GREEN}✓${NC} Seeded $count payment(s)   "
         fi
     done
     echo ""
