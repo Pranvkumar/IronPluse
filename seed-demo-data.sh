@@ -65,7 +65,7 @@ seed_members() {
         '{"name":"Sneha Iyer","email":"sneha.i@example.com","phone":"9876543223","joinDate":"2024-02-20","membershipType":"Standard"}'
         '{"name":"Nikhil Bhat","email":"nikhil.b@example.com","phone":"9876543224","joinDate":"2024-03-08","membershipType":"Basic"}'
         '{"name":"Ananya Roy","email":"ananya.r@example.com","phone":"9876543225","joinDate":"2024-01-12","membershipType":"Premium"}'
-        '{"name":"Varun Sinha","email":"varun.s@example.com","phone":"9876543226","joinDate":"2024-02-17","membershipType":"Standard"}"}'
+        '{"name":"Varun Sinha","email":"varun.s@example.com","phone":"9876543226","joinDate":"2024-02-17","membershipType":"Standard"}'
         '{"name":"Ritika Jain","email":"ritika.j@example.com","phone":"9876543227","joinDate":"2024-03-03","membershipType":"Basic"}'
         '{"name":"Abhishek Singh","email":"abhishek.s@example.com","phone":"9876543228","joinDate":"2024-01-19","membershipType":"Premium"}'
         '{"name":"Meera Kapoor","email":"meera.k@example.com","phone":"9876543229","joinDate":"2024-02-22","membershipType":"Standard"}'
