@@ -42,36 +42,66 @@ check_api() {
     fi
 }
 
+# Function to clear existing data
+clear_database() {
+    echo -e "${YELLOW}Clearing existing data...${NC}"
+    
+    # Get all member IDs and delete each one
+    members=$(curl -s "$RENDER_URL/api/members" | jq -r '.[].id // empty' 2>/dev/null)
+    if [ ! -z "$members" ]; then
+        count=0
+        while IFS= read -r id; do
+            if [ ! -z "$id" ]; then
+                curl -s -X DELETE "$RENDER_URL/api/members/$id" > /dev/null 2>&1
+                ((count++))
+            fi
+        done <<< "$members"
+        echo -e "${GREEN}✓ Deleted $count member(s)${NC}"
+    fi
+    
+    # Get all payment IDs and delete each one
+    payments=$(curl -s "$RENDER_URL/api/payments" | jq -r '.[].id // empty' 2>/dev/null)
+    if [ ! -z "$payments" ]; then
+        count=0
+        while IFS= read -r id; do
+            if [ ! -z "$id" ]; then
+                curl -s -X DELETE "$RENDER_URL/api/payments/$id" > /dev/null 2>&1
+                ((count++))
+            fi
+        done <<< "$payments"
+        echo -e "${GREEN}✓ Deleted $count payment(s)${NC}"
+    fi
+}
 # Function to seed members
 seed_members() {
     echo -e "${YELLOW}Seeding member records...${NC}"
     
     local members=(
-        '{"name":"Rajesh Kumar","email":"rajesh.k@example.com","phone":"9876543210","joinDate":"2024-01-15","membershipType":"Premium"}'
-        '{"name":"Priya Singh","email":"priya.singh@example.com","phone":"9876543211","joinDate":"2024-02-10","membershipType":"Standard"}'
-        '{"name":"Amit Patel","email":"amit.p@example.com","phone":"9876543212","joinDate":"2024-01-20","membershipType":"Premium"}'
-        '{"name":"Neha Sharma","email":"neha.s@example.com","phone":"9876543213","joinDate":"2024-03-05","membershipType":"Basic"}'
-        '{"name":"Vikram Reddy","email":"vikram.r@example.com","phone":"9876543214","joinDate":"2024-02-28","membershipType":"Premium"}'
-        '{"name":"Aisha Khan","email":"aisha.k@example.com","phone":"9876543215","joinDate":"2024-03-12","membershipType":"Standard"}'
-        '{"name":"Rohan Gupta","email":"rohan.g@example.com","phone":"9876543216","joinDate":"2024-01-08","membershipType":"Premium"}'
-        '{"name":"Divya Nair","email":"divya.n@example.com","phone":"9876543217","joinDate":"2024-02-14","membershipType":"Basic"}'
-        '{"name":"Arjun Verma","email":"arjun.v@example.com","phone":"9876543218","joinDate":"2024-03-20","membershipType":"Standard"}'
-        '{"name":"Kavya Menon","email":"kavya.m@example.com","phone":"9876543219","joinDate":"2024-01-25","membershipType":"Premium"}'
-        '{"name":"Sanjay Chopra","email":"sanjay.c@example.com","phone":"9876543220","joinDate":"2024-02-11","membershipType":"Standard"}'
-        '{"name":"Pooja Malhotra","email":"pooja.m@example.com","phone":"9876543221","joinDate":"2024-03-01","membershipType":"Basic"}'
-        '{"name":"Harsh Desai","email":"harsh.d@example.com","phone":"9876543222","joinDate":"2024-01-30","membershipType":"Premium"}'
-        '{"name":"Sneha Iyer","email":"sneha.i@example.com","phone":"9876543223","joinDate":"2024-02-20","membershipType":"Standard"}'
-        '{"name":"Nikhil Bhat","email":"nikhil.b@example.com","phone":"9876543224","joinDate":"2024-03-08","membershipType":"Basic"}'
-        '{"name":"Ananya Roy","email":"ananya.r@example.com","phone":"9876543225","joinDate":"2024-01-12","membershipType":"Premium"}'
-        '{"name":"Varun Sinha","email":"varun.s@example.com","phone":"9876543226","joinDate":"2024-02-17","membershipType":"Standard"}'
-        '{"name":"Ritika Jain","email":"ritika.j@example.com","phone":"9876543227","joinDate":"2024-03-03","membershipType":"Basic"}'
-        '{"name":"Abhishek Singh","email":"abhishek.s@example.com","phone":"9876543228","joinDate":"2024-01-19","membershipType":"Premium"}'
-        '{"name":"Meera Kapoor","email":"meera.k@example.com","phone":"9876543229","joinDate":"2024-02-22","membershipType":"Standard"}'
-        '{"name":"Ravi Tiwari","email":"ravi.t@example.com","phone":"9876543230","joinDate":"2024-03-10","membershipType":"Premium"}'
-        '{"name":"Isha Bansal","email":"isha.b@example.com","phone":"9876543231","joinDate":"2024-01-28","membershipType":"Basic"}'
-        '{"name":"Karan Kapadia","email":"karan.k@example.com","phone":"9876543232","joinDate":"2024-02-05","membershipType":"Standard"}'
-        '{"name":"Nisha Saxena","email":"nisha.x@example.com","phone":"9876543233","joinDate":"2024-03-15","membershipType":"Premium"}'
-        '{"name":"Ashish Mishra","email":"ashish.m@example.com","phone":"9876543234","joinDate":"2024-01-22","membershipType":"Basic"}'
+           '{"name":"Rajesh Kumar","email":"rajesh.k@example.com","phone":"9876543210","joinDate":"2024-01-15","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Priya Singh","email":"priya.singh@example.com","phone":"9876543211","joinDate":"2024-02-10","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Amit Patel","email":"amit.p@example.com","phone":"9876543212","joinDate":"2024-01-20","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Neha Sharma","email":"neha.s@example.com","phone":"9876543213","joinDate":"2024-03-05","membershipPlan":"Basic","status":"ACTIVE"}'
+           '{"name":"Vikram Reddy","email":"vikram.r@example.com","phone":"9876543214","joinDate":"2024-02-28","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Aisha Khan","email":"aisha.k@example.com","phone":"9876543215","joinDate":"2024-03-12","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Rohan Gupta","email":"rohan.g@example.com","phone":"9876543216","joinDate":"2024-01-08","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Divya Nair","email":"divya.n@example.com","phone":"9876543217","joinDate":"2024-02-14","membershipPlan":"Basic","status":"INACTIVE"}'
+           '{"name":"Arjun Verma","email":"arjun.v@example.com","phone":"9876543218","joinDate":"2024-03-20","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Kavya Menon","email":"kavya.m@example.com","phone":"9876543219","joinDate":"2024-01-25","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Sanjay Chopra","email":"sanjay.c@example.com","phone":"9876543220","joinDate":"2024-02-11","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Pooja Malhotra","email":"pooja.m@example.com","phone":"9876543221","joinDate":"2024-03-01","membershipPlan":"Basic","status":"ACTIVE"}'
+           '{"name":"Harsh Desai","email":"harsh.d@example.com","phone":"9876543222","joinDate":"2024-01-30","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Sneha Iyer","email":"sneha.i@example.com","phone":"9876543223","joinDate":"2024-02-20","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Nikhil Bhat","email":"nikhil.b@example.com","phone":"9876543224","joinDate":"2024-03-08","membershipPlan":"Basic","status":"INACTIVE"}'
+           '{"name":"Ananya Roy","email":"ananya.r@example.com","phone":"9876543225","joinDate":"2024-01-12","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Varun Sinha","email":"varun.s@example.com","phone":"9876543226","joinDate":"2024-02-17","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Ritika Jain","email":"ritika.j@example.com","phone":"9876543227","joinDate":"2024-03-03","membershipPlan":"Basic","status":"ACTIVE"}'
+           '{"name":"Abhishek Singh","email":"abhishek.s@example.com","phone":"9876543228","joinDate":"2024-01-19","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Meera Kapoor","email":"meera.k@example.com","phone":"9876543229","joinDate":"2024-02-22","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Ravi Tiwari","email":"ravi.t@example.com","phone":"9876543230","joinDate":"2024-03-10","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Isha Bansal","email":"isha.b@example.com","phone":"9876543231","joinDate":"2024-01-28","membershipPlan":"Basic","status":"ACTIVE"}'
+           '{"name":"Karan Kapadia","email":"karan.k@example.com","phone":"9876543232","joinDate":"2024-02-05","membershipPlan":"Standard","status":"ACTIVE"}'
+           '{"name":"Nisha Saxena","email":"nisha.x@example.com","phone":"9876543233","joinDate":"2024-03-15","membershipPlan":"Premium","status":"ACTIVE"}'
+           '{"name":"Ashish Mishra","email":"ashish.m@example.com","phone":"9876543234","joinDate":"2024-01-22","membershipPlan":"Basic","status":"INACTIVE"}'
     )
     
     local count=0
@@ -95,26 +125,26 @@ seed_payments() {
     echo -e "${YELLOW}Seeding payment records...${NC}"
     
     local payments=(
-        '{"memberId":"1","amount":5000,"type":"Monthly","status":"Completed","date":"2024-03-10"}'
-        '{"memberId":"2","amount":3000,"type":"Monthly","status":"Completed","date":"2024-03-09"}'
-        '{"memberId":"3","amount":5000,"type":"Monthly","status":"Completed","date":"2024-03-11"}'
-        '{"memberId":"4","amount":2000,"type":"Monthly","status":"Completed","date":"2024-03-08"}'
-        '{"memberId":"5","amount":5000,"type":"Monthly","status":"Pending","date":"2024-03-14"}'
-        '{"memberId":"6","amount":3000,"type":"Monthly","status":"Completed","date":"2024-03-10"}'
-        '{"memberId":"7","amount":5000,"type":"Monthly","status":"Completed","date":"2024-03-12"}'
-        '{"memberId":"8","amount":2000,"type":"Monthly","status":"Completed","date":"2024-03-07"}'
-        '{"memberId":"9","amount":3000,"type":"Monthly","status":"Completed","date":"2024-03-13"}'
-        '{"memberId":"10","amount":5000,"type":"Monthly","status":"Completed","date":"2024-03-10"}'
-        '{"memberId":"11","amount":3000,"type":"Quarterly","status":"Completed","date":"2024-03-01"}'
-        '{"memberId":"12","amount":2000,"type":"Monthly","status":"Pending","date":"2024-03-15"}'
-        '{"memberId":"13","amount":5000,"type":"Monthly","status":"Completed","date":"2024-03-10"}'
-        '{"memberId":"14","amount":3000,"type":"Monthly","status":"Completed","date":"2024-03-12"}'
-        '{"memberId":"15","amount":2000,"type":"Monthly","status":"Completed","date":"2024-03-09"}'
-        '{"memberId":"16","amount":5000,"type":"Monthly","status":"Completed","date":"2024-03-11"}'
-        '{"memberId":"17","amount":3000,"type":"Monthly","status":"Completed","date":"2024-03-10"}'
-        '{"memberId":"18","amount":2000,"type":"Monthly","status":"Completed","date":"2024-03-14"}'
-        '{"memberId":"19","amount":5000,"type":"Monthly","status":"Pending","date":"2024-03-15"}'
-        '{"memberId":"20","amount":3000,"type":"Monthly","status":"Completed","date":"2024-03-10"}'
+           '{"memberId":"1","amount":5000,"paymentDate":"2024-03-10T10:30:00","status":"PAID"}'
+           '{"memberId":"2","amount":3000,"paymentDate":"2024-03-09T11:15:00","status":"PAID"}'
+           '{"memberId":"3","amount":5000,"paymentDate":"2024-03-11T09:45:00","status":"PAID"}'
+           '{"memberId":"4","amount":2000,"paymentDate":"2024-03-08T14:20:00","status":"PAID"}'
+           '{"memberId":"5","amount":5000,"paymentDate":"2024-03-14T16:00:00","status":"PENDING"}'
+           '{"memberId":"6","amount":3000,"paymentDate":"2024-03-10T10:00:00","status":"PAID"}'
+           '{"memberId":"7","amount":5000,"paymentDate":"2024-03-12T12:30:00","status":"PAID"}'
+           '{"memberId":"8","amount":2000,"paymentDate":"2024-03-07T08:15:00","status":"PAID"}'
+           '{"memberId":"9","amount":3000,"paymentDate":"2024-03-13T15:45:00","status":"PAID"}'
+           '{"memberId":"10","amount":5000,"paymentDate":"2024-03-10T11:00:00","status":"PAID"}'
+           '{"memberId":"11","amount":3000,"paymentDate":"2024-03-01T10:30:00","status":"PAID"}'
+           '{"memberId":"12","amount":2000,"paymentDate":"2024-03-15T13:20:00","status":"PENDING"}'
+           '{"memberId":"13","amount":5000,"paymentDate":"2024-03-10T09:00:00","status":"PAID"}'
+           '{"memberId":"14","amount":3000,"paymentDate":"2024-03-12T14:15:00","status":"PAID"}'
+           '{"memberId":"15","amount":2000,"paymentDate":"2024-03-09T16:30:00","status":"PAID"}'
+           '{"memberId":"16","amount":5000,"paymentDate":"2024-03-11T10:45:00","status":"PAID"}'
+           '{"memberId":"17","amount":3000,"paymentDate":"2024-03-10T12:00:00","status":"PAID"}'
+           '{"memberId":"18","amount":2000,"paymentDate":"2024-03-14T15:30:00","status":"PAID"}'
+           '{"memberId":"19","amount":5000,"paymentDate":"2024-03-15T11:15:00","status":"PENDING"}'
+           '{"memberId":"20","amount":3000,"paymentDate":"2024-03-10T13:45:00","status":"PAID"}'
     )
     
     local count=0
@@ -136,6 +166,8 @@ seed_payments() {
 # Main execution
 echo ""
 check_api
+echo ""
+clear_database
 echo ""
 seed_members
 echo ""
