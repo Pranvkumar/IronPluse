@@ -23,12 +23,9 @@ RUN apk add --no-cache bash
 COPY --from=builder /app/target/ironpulse-api-*.jar app.jar
 COPY --from=builder /app/lib ./lib
 
-# Copy run scripts
-COPY --from=builder /app/scripts ./scripts
-
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD java -cp app.jar com.ironpulse.health.HealthCheck || exit 1
+    CMD wget -qO- http://localhost:8080/actuator/health || exit 1
 
 # Expose port
 EXPOSE 8080

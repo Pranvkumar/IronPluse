@@ -1,16 +1,16 @@
 # IronPulse Render Deployment Guide
 
-## 📋 Overview
+##  Overview
 
 This guide covers deploying IronPulse to Render with:
-- ✅ MongoDB Atlas for database
-- ✅ REST API (Spring Boot) for backend
-- ✅ Previous desktop version preserved (v1.0-desktop tag)
-- ✅ Automatic scaling and zero downtime
+-  MongoDB Atlas for database
+-  REST API (Spring Boot) for backend
+-  Previous desktop version preserved (v1.0-desktop tag)
+-  Automatic scaling and zero downtime
 
 ---
 
-## 🎯 Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -30,7 +30,7 @@ This guide covers deploying IronPulse to Render with:
 
 ---
 
-## 🚀 Pre-Deployment Checklist
+##  Pre-Deployment Checklist
 
 - [ ] MongoDB Atlas cluster "Finmind" is **Available**
 - [ ] Database user created (`ironpulse_user`)
@@ -41,7 +41,7 @@ This guide covers deploying IronPulse to Render with:
 
 ---
 
-## 📝 Step 1: Prepare MongoDB Atlas
+##  Step 1: Prepare MongoDB Atlas
 
 ### 1.1 Verify Cluster Status
 
@@ -84,11 +84,11 @@ mongodb+srv://ironpulse_user:YOUR_PASSWORD@finmind.xxxxx.mongodb.net/ironpulse?r
 4. Add comment: "Render deployment"
 5. Click **"Confirm"**
 
-⚠️ **For production:** Whitelist specific Render IPs instead of allowing all.
+️ **For production:** Whitelist specific Render IPs instead of allowing all.
 
 ---
 
-## 🐳 Step 2: Deploy to Render
+##  Step 2: Deploy to Render
 
 ### 2.1 Connect Repository
 
@@ -134,7 +134,7 @@ Add these variables:
 
 ---
 
-## ✅ Step 3: Verify Deployment
+##  Step 3: Verify Deployment
 
 ### 3.1 Test API Health
 
@@ -179,7 +179,7 @@ curl -X POST https://ironpulse-api.onrender.com/api/members \
 
 ---
 
-## 🔄 Step 4: Connect Frontend (Optional)
+##  Step 4: Connect Frontend (Optional)
 
 If you have a frontend (React/Vue):
 
@@ -193,7 +193,7 @@ If you have a frontend (React/Vue):
 
 ---
 
-## 📚 API Endpoints
+##  API Endpoints
 
 ### Members
 
@@ -229,7 +229,7 @@ If you have a frontend (React/Vue):
 
 ---
 
-## 🔄 Maintaining Previous Versions
+##  Maintaining Previous Versions
 
 ### Access Desktop Version
 
@@ -257,7 +257,7 @@ v1.0-desktop         # Original desktop release (stable)
 
 ---
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### "Failed to connect to MongoDB"
 
@@ -291,7 +291,7 @@ v1.0-desktop         # Original desktop release (stable)
 
 ---
 
-## 🔐 Security Best Practices
+##  Security Best Practices
 
 1. **Never commit `.env` file** with real credentials
 2. **Use strong passwords** for MongoDB user
@@ -303,7 +303,7 @@ v1.0-desktop         # Original desktop release (stable)
 
 ---
 
-## 📊 Monitoring
+##  Monitoring
 
 ### View Logs
 
@@ -323,7 +323,7 @@ v1.0-desktop         # Original desktop release (stable)
 
 ---
 
-## 🔄 Updating Deployment
+##  Updating Deployment
 
 To update the running application:
 
@@ -343,10 +343,10 @@ To update the running application:
 
 ---
 
-## 📝 Next Steps
+##  Next Steps
 
-1. ✅ Configure MongoDB Atlas (waiting for Finmind cluster)
-2. ✅ Deploy to Render using render.yaml
+1.  Configure MongoDB Atlas (waiting for Finmind cluster)
+2.  Deploy to Render using render.yaml
 3. ⏳ Set up frontend (if using web UI)
 4. ⏳ Configure custom domain (optional)
 5. ⏳ Set up monitoring and alerts

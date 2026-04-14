@@ -3,147 +3,1220 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IronPulse Web</title>
+  <title>IronPulse Web Frontend</title>
   <style>
     :root {
-      --bg1: #f2f7ff;
-      --bg2: #fff5ef;
-      --card: #ffffff;
-      --ink: #122033;
-      --muted: #5f6e7f;
-      --accent: #0b6dd8;
-      --ok: #09824b;
-      --warn: #9c6a00;
+      --bg-main: #f8f5ee;
+      --bg-hero: #e8f4e0;
+      --bg-ink: #102419;
+      --surface: #ffffff;
+      --surface-soft: #f2efe7;
+      --line: #d6d2c7;
+      --text: #1f2f23;
+      --muted: #607264;
+      --accent: #0f7b53;
+      --accent-alt: #d36a2a;
+      --danger: #b42318;
+      --ok: #117048;
+      --shadow: 0 10px 35px rgba(21, 34, 21, 0.12);
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: "Segoe UI", "Trebuchet MS", sans-serif;
-      color: var(--ink);
-      background: radial-gradient(1200px 600px at 10% -10%, #d9ebff 0, transparent 50%),
-                  radial-gradient(1200px 600px at 110% 110%, #ffe5d3 0, transparent 50%),
-                  linear-gradient(160deg, var(--bg1), var(--bg2));
+      font-family: "Avenir Next", "Gill Sans", "Trebuchet MS", sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(140deg, rgba(232, 244, 224, 0.7), rgba(248, 245, 238, 0.95)),
+        radial-gradient(circle at 90% 10%, rgba(211, 106, 42, 0.08), transparent 40%),
+        radial-gradient(circle at 10% 90%, rgba(15, 123, 83, 0.1), transparent 45%),
+        var(--bg-main);
       min-height: 100vh;
     }
-    .wrap {
-      max-width: 980px;
-      margin: 40px auto;
-      padding: 0 16px;
-    }
-    .hero {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(16, 27, 46, 0.08);
-      border: 1px solid #e6eef8;
-    }
-    h1 { margin: 0 0 8px; font-size: 30px; }
-    p { margin: 0; color: var(--muted); }
-    .grid {
+
+    .hidden { display: none !important; }
+
+    .auth-wrap {
+      min-height: 100vh;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .auth-visual {
+      padding: 62px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.16), transparent 36%),
+        radial-gradient(circle at 18% 82%, rgba(211, 106, 42, 0.2), transparent 42%),
+        linear-gradient(160deg, #1c3a2b, #0f7b53);
+      color: #f9fff9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 22px;
+      font-weight: 700;
+    }
+
+    .auth-visual h1 {
+      margin: 0;
+      font-size: 4rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1.02;
+    }
+
+    .auth-visual p {
+      max-width: 500px;
+      color: rgba(249, 255, 249, 0.9);
+      font-size: 1.28rem;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .hero-features {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-      margin-top: 16px;
+      max-width: 600px;
     }
-    .card {
-      background: var(--card);
-      border: 1px solid #e6eef8;
-      border-radius: 12px;
-      padding: 14px;
-      box-shadow: 0 6px 14px rgba(16, 27, 46, 0.06);
+
+    .hero-feature {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 13px;
+      padding: 12px 14px;
+      background: rgba(7, 16, 11, 0.2);
+      font-size: 1.04rem;
     }
-    .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .value { font-size: 26px; font-weight: 700; margin-top: 6px; }
-    .ok { color: var(--ok); }
-    .warn { color: var(--warn); }
-    .row {
-      margin-top: 18px;
+
+    .hero-feature strong {
+      display: block;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      opacity: 0.84;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .hero-metrics {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      margin-top: 22px;
     }
-    button {
-      border: 0;
-      border-radius: 10px;
-      background: var(--accent);
-      color: #fff;
-      padding: 10px 14px;
-      font-weight: 600;
-      cursor: pointer;
+
+    .metric-pill {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 11px;
+      padding: 10px 13px;
+      font-size: 0.98rem;
     }
-    .status {
-      margin-top: 12px;
+
+    .auth-form-wrap {
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--surface);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+      padding: 38px;
+      animation: rise 0.55s ease;
+    }
+
+    .auth-card h2 {
+      font-size: 2.28rem;
+    }
+
+    .auth-card p {
+      font-size: 1.08rem;
+    }
+
+    .auth-card .btn-primary {
+      width: 100%;
+      padding: 13px 16px;
+      font-size: 1.08rem;
+    }
+
+    .auth-card .note {
+      border-top: 1px solid #ece6d8;
+      margin-top: 16px;
+      padding-top: 12px;
+    }
+
+    .auth-card h2 {
+      margin: 0 0 8px;
+      font-size: 1.8rem;
+    }
+
+    .auth-card p {
+      margin: 0 0 18px;
       color: var(--muted);
-      font-size: 14px;
     }
-    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+    .field { margin-bottom: 14px; }
+
+    .field label {
+      font-size: 0.85rem;
+      color: #314236;
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 11px;
+      padding: 10px 12px;
+      outline: none;
+      font: inherit;
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15, 123, 83, 0.12);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      font: inherit;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-alt { background: var(--accent-alt); color: #fff; }
+    .btn-soft { background: var(--surface-soft); color: var(--text); border: 1px solid var(--line); }
+    .btn-danger { background: var(--danger); color: #fff; }
+
+    .note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #132c20, #1f3a2c);
+      color: #eff6f0;
+      padding: 18px 14px;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      margin: 6px 10px 20px;
+      font-size: 1.28rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .brand small {
+      display: block;
+      color: rgba(239, 246, 240, 0.72);
+      font-size: 0.78rem;
+      margin-top: 4px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+
+    .nav-item {
+      width: 100%;
+      text-align: left;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #eff6f0;
+      padding: 10px 12px;
+      border-radius: 11px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .nav-item.active {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      color: #2f3f33;
+      font-size: 0.86rem;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(19, 37, 25, 0.07);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat {
+      background: linear-gradient(160deg, #fff, #f7f4ec);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 12px;
+      animation: rise 0.45s ease;
+    }
+
+    .stat .k { color: var(--muted); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .stat .v { margin-top: 7px; font-size: 1.45rem; font-weight: 800; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      border-bottom: 1px solid #ece6d8;
+      padding: 9px 8px;
+      font-size: 0.9rem;
+    }
+
+    th { color: #415447; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .toolbar .search {
+      min-width: 220px;
+      flex: 1;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .stack > * + * { margin-top: 8px; }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tag.ok { background: rgba(17, 112, 72, 0.14); color: #0d5f3b; }
+    .tag.warn { background: rgba(211, 106, 42, 0.16); color: #9f4d1d; }
+    .tag.bad { background: rgba(180, 35, 24, 0.16); color: #8f1e15; }
+
+    .message {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      min-height: 20px;
+    }
+
+    .activity-item {
+      border: 1px solid #ece6d8;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #fffdf8;
+    }
+
+    .small { font-size: 0.85rem; color: var(--muted); }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .split { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 850px) {
+      .auth-wrap { grid-template-columns: 1fr; }
+      .auth-visual { min-height: 220px; }
+      .hero-features { grid-template-columns: 1fr; }
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar {
+        position: static;
+        height: auto;
+      }
+      .form-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="hero">
-      <h1>IronPulse Web Frontend</h1>
-      <p>Local frontend is live. Data loads from the REST API endpoints.</p>
+  <section id="auth" class="auth-wrap">
+    <aside class="auth-visual">
+      <div>
+        <span class="hero-kicker">Gym Business Control Center</span>
+        <h1>IronPulse</h1>
+        <p>
+          Run your entire gym from one clean workspace.
+          Track memberships, collect payments, and monitor growth with real-time data.
+        </p>
+        <div class="hero-features">
+          <div class="hero-feature"><strong>Members</strong>Fast onboarding and complete profile tracking</div>
+          <div class="hero-feature"><strong>Payments</strong>Record invoices and follow pending collections</div>
+          <div class="hero-feature"><strong>Analytics</strong>Live revenue and conversion insights</div>
+          <div class="hero-feature"><strong>Activity</strong>Recent actions visible across your team</div>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric-pill">All-in-one dashboard</div>
+          <div class="metric-pill">Desktop and mobile ready</div>
+          <div class="metric-pill">Deployment-ready</div>
+        </div>
+      </div>
+      <div class="small"></div>
+    </aside>
 
-      <div class="grid">
-        <div class="card">
-          <div class="label">Total Members</div>
-          <div id="totalMembers" class="value">-</div>
+    <div class="auth-form-wrap">
+      <div class="auth-card">
+        <h2>Welcome Back</h2>
+        <p>Sign in to continue to your gym operations dashboard.</p>
+        <form id="loginForm">
+          <div class="field">
+            <label for="username">Username</label>
+            <input id="username" required placeholder="admin" />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" required type="password" placeholder="••••••••" />
+          </div>
+          <button class="btn btn-primary" type="submit">Enter Dashboard</button>
+          <div id="loginMsg" class="message"></div>
+        </form>
+        <div class="note">
+          Default fallback login: <strong>admin / admin123</strong>
         </div>
-        <div class="card">
-          <div class="label">Active Members</div>
-          <div id="activeMembers" class="value ok">-</div>
-        </div>
-        <div class="card">
-          <div class="label">Total Revenue</div>
-          <div id="totalRevenue" class="value warn">-</div>
+      </div>
+    </div>
+  </section>
+
+  <main id="app" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="brand">IronPulse<small id="userLabel">Signed in</small></div>
+      <button class="nav-item active" data-view="dashboard">Dashboard</button>
+      <button class="nav-item" data-view="members">Members</button>
+      <button class="nav-item" data-view="payments">Payments</button>
+      <button class="nav-item" data-view="activity">Activity</button>
+      <button class="nav-item" data-view="reports">Reports</button>
+      <button class="nav-item" data-view="settings">Settings</button>
+      <button id="logoutBtn" class="nav-item" style="margin-top:18px; background: rgba(255,255,255,0.12);">Logout</button>
+    </aside>
+
+    <section class="content">
+      <div class="topbar">
+        <h2 id="pageTitle">Dashboard</h2>
+        <div>
+          <span id="apiStatus" class="chip">Connection: checking...</span>
+          <button id="refreshAll" class="btn btn-soft" type="button">Refresh</button>
         </div>
       </div>
 
-      <div class="row">
-        <button id="refreshBtn" type="button">Refresh Dashboard</button>
-        <button id="membersBtn" type="button">Load Members Count</button>
+      <div id="view-dashboard">
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="split">
+          <div class="panel">
+            <h3>Recent Payments</h3>
+            <div id="recentPayments"></div>
+          </div>
+          <div class="panel">
+            <h3>Member Distribution</h3>
+            <div id="memberDistribution" class="stack"></div>
+          </div>
+        </div>
       </div>
-      <div id="status" class="status">Waiting for API...</div>
+
+      <div id="view-members" class="hidden">
+        <div class="panel">
+          <div class="toolbar">
+            <input id="memberSearch" class="search" placeholder="Search member by name, email, phone" />
+            <button id="searchMemberBtn" class="btn btn-soft" type="button">Search</button>
+            <button id="loadMembersBtn" class="btn btn-soft" type="button">Reload</button>
+          </div>
+          <div style="overflow:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Plan</th>
+                  <th>Fee</th>
+                  <th>Phone</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="membersTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Member Details & Payment History</h3>
+          <div id="memberDetail" class="small">Select a member to view full details.</div>
+          <div style="overflow:auto; margin-top:10px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Method</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="memberPaymentsTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 id="memberFormTitle">Add Member</h3>
+          <form id="memberForm" class="form-grid">
+            <input type="hidden" id="memberId" />
+            <div><label>Name</label><input id="mName" required /></div>
+            <div><label>Email</label><input id="mEmail" type="email" /></div>
+            <div><label>Phone</label><input id="mPhone" /></div>
+            <div><label>Age</label><input id="mAge" type="number" min="1" /></div>
+            <div><label>Plan</label><input id="mPlan" placeholder="Basic/Premium/Elite" /></div>
+            <div>
+              <label>Status</label>
+              <select id="mStatus">
+                <option>ACTIVE</option>
+                <option>INACTIVE</option>
+                <option>SUSPENDED</option>
+              </select>
+            </div>
+            <div><label>Monthly Fee</label><input id="mFee" type="number" step="0.01" min="0" /></div>
+            <div class="full"><label>Notes</label><textarea id="mNotes"></textarea></div>
+            <div class="full">
+              <button class="btn btn-primary" type="submit">Save Member</button>
+              <button id="memberResetBtn" class="btn btn-soft" type="button">Clear</button>
+            </div>
+          </form>
+          <div id="memberMsg" class="message"></div>
+        </div>
+      </div>
+
+      <div id="view-payments" class="hidden">
+        <div class="panel">
+          <div class="toolbar">
+            <select id="paymentStatusFilter">
+              <option value="">All Status</option>
+              <option value="PAID">PAID</option>
+              <option value="PENDING">PENDING</option>
+            </select>
+            <input id="paymentMemberIdFilter" placeholder="Filter by Member ID" />
+            <button id="loadPaymentsBtn" class="btn btn-soft" type="button">Load</button>
+          </div>
+          <div style="overflow:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Member ID</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Method</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="paymentsTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Payment Details</h3>
+          <div id="paymentDetail" class="small">Select a payment to view full details.</div>
+        </div>
+
+        <div class="panel">
+          <h3>Record Payment</h3>
+          <form id="paymentForm" class="form-grid">
+            <div><label>Member ID</label><input id="pMemberId" required /></div>
+            <div><label>Amount</label><input id="pAmount" required type="number" min="0" step="0.01" /></div>
+            <div>
+              <label>Status</label>
+              <select id="pStatus">
+                <option>PAID</option>
+                <option>PENDING</option>
+              </select>
+            </div>
+            <div>
+              <label>Method</label>
+              <select id="pMethod">
+                <option>CASH</option>
+                <option>CARD</option>
+                <option>UPI</option>
+                <option>BANK_TRANSFER</option>
+              </select>
+            </div>
+            <div><label>Invoice #</label><input id="pInvoice" placeholder="INV-1001" /></div>
+            <div class="full"><label>Notes</label><textarea id="pNotes"></textarea></div>
+            <div class="full"><button class="btn btn-alt" type="submit">Save Payment</button></div>
+          </form>
+          <div id="paymentMsg" class="message"></div>
+        </div>
+      </div>
+
+      <div id="view-activity" class="hidden">
+        <div class="panel">
+          <h3>Recent Activity Feed</h3>
+          <button id="refreshActivityBtn" class="btn btn-soft" type="button">Refresh Feed</button>
+          <div id="activityFeed" style="margin-top:10px;"></div>
+        </div>
+      </div>
+
+      <div id="view-reports" class="hidden">
+        <div class="panel">
+          <h3>Revenue & Collection</h3>
+          <div class="stats-grid" id="reportStats"></div>
+        </div>
+        <div class="panel">
+          <h3>Member Summary</h3>
+          <div id="memberSummary" class="stack"></div>
+        </div>
+      </div>
+
+      <div id="view-settings" class="hidden">
+        <div class="panel">
+          <h3>App Settings</h3>
+          <div class="stack">
+            <div>
+              <label>Server Base URL</label>
+              <input id="apiBase" value="" placeholder="Leave empty to use same origin" />
+            </div>
+            <div>
+              <label>Theme Accent</label>
+              <select id="themeAccent">
+                <option value="#0f7b53">Green Pulse</option>
+                <option value="#0858b2">Blue Steel</option>
+                <option value="#b24c15">Burnt Orange</option>
+              </select>
+            </div>
+            <div>
+              <button id="saveSettingsBtn" class="btn btn-primary" type="button">Save Settings</button>
+            </div>
+            <div id="settingsMsg" class="message"></div>
+          </div>
+        </div>
+      </div>
     </section>
-  </div>
+  </main>
 
   <script>
-    const statusEl = document.getElementById('status');
-    const totalMembersEl = document.getElementById('totalMembers');
-    const activeMembersEl = document.getElementById('activeMembers');
-    const totalRevenueEl = document.getElementById('totalRevenue');
+    const state = {
+      user: null,
+      members: [],
+      payments: [],
+      overview: {},
+      selectedMember: null,
+      settings: {
+        apiBase: localStorage.getItem("ironpulse.apiBase") || "",
+        accent: localStorage.getItem("ironpulse.accent") || "#0f7b53"
+      }
+    };
 
-    async function loadDashboard() {
-      statusEl.textContent = 'Loading /api/dashboard/overview ...';
+    const views = ["dashboard", "members", "payments", "activity", "reports", "settings"];
+
+    function api(path) {
+      const base = (state.settings.apiBase || "").trim();
+      if (!base) return path;
+      return base.replace(/\/$/, "") + path;
+    }
+
+    async function request(path, options) {
+      const response = await fetch(api(path), {
+        headers: { "Content-Type": "application/json", ...(options?.headers || {}) },
+        ...options
+      });
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(text || ("HTTP " + response.status));
+      }
+      if (response.status === 204) return null;
+      return response.json();
+    }
+
+    function money(n) {
+      return "Rs " + Number(n || 0).toFixed(2);
+    }
+
+    function dt(v) {
+      if (!v) return "-";
+      const d = new Date(v);
+      if (Number.isNaN(d.getTime())) return String(v);
+      return d.toLocaleString();
+    }
+
+    function setApiStatus(ok, text) {
+      const chip = document.getElementById("apiStatus");
+      chip.textContent = text;
+      chip.style.background = ok ? "rgba(17,112,72,.12)" : "rgba(180,35,24,.12)";
+      chip.style.color = ok ? "#0d5f3b" : "#8f1e15";
+    }
+
+    function viewSwitch(name) {
+      views.forEach(v => {
+        document.getElementById("view-" + v).classList.toggle("hidden", v !== name);
+      });
+      document.querySelectorAll(".nav-item[data-view]").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.view === name);
+      });
+      document.getElementById("pageTitle").textContent = name[0].toUpperCase() + name.slice(1);
+    }
+
+    function renderDashboard() {
+      const o = state.overview || {};
+      const stats = [
+        ["Total Members", o.totalMembers || 0],
+        ["Active Members", o.activeMembers || 0],
+        ["Total Payments", o.totalPayments || 0],
+        ["Revenue", money(o.totalRevenue || 0)],
+        ["Collection Rate", (o.collectionRate || 0).toFixed(1) + "%"]
+      ];
+      document.getElementById("statsGrid").innerHTML = stats
+        .map(([k, v]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div></div>`)
+        .join("");
+    }
+
+    function renderDistribution(distribution) {
+      const byPlan = distribution?.byPlan || {};
+      const byStatus = distribution?.byStatus || {};
+      const planRows = Object.entries(byPlan).map(([k, v]) => `<div><strong>${k || "UNKNOWN"}</strong>: ${v}</div>`).join("") || "<div>No plan data.</div>";
+      const statusRows = Object.entries(byStatus).map(([k, v]) => `<div><strong>${k || "UNKNOWN"}</strong>: ${v}</div>`).join("") || "<div>No status data.</div>";
+      document.getElementById("memberDistribution").innerHTML = `<div><strong>By Plan</strong></div>${planRows}<hr><div><strong>By Status</strong></div>${statusRows}`;
+    }
+
+    function renderRecentPayments(recentPayments) {
+      const el = document.getElementById("recentPayments");
+      if (!recentPayments || recentPayments.length === 0) {
+        el.innerHTML = "<div class='small'>No recent payments.</div>";
+        return;
+      }
+      el.innerHTML = recentPayments
+        .map(p => `
+          <div class="activity-item">
+            <div><strong>${p.invoiceNumber || p.id || "Payment"}</strong> - ${money(p.amount)}</div>
+            <div class="small">Member: ${p.memberId || "-"} | ${dt(p.paymentDate)}</div>
+          </div>
+        `)
+        .join("");
+    }
+
+    function renderMembersTable(list) {
+      const tbody = document.getElementById("membersTable");
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="small">No members found.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = list.map(m => `
+        <tr>
+          <td>${m.name || "-"}</td>
+          <td><span class="tag ${m.status === "ACTIVE" ? "ok" : (m.status === "SUSPENDED" ? "bad" : "warn")}">${m.status || "UNKNOWN"}</span></td>
+          <td>${m.membershipPlan || "-"}</td>
+          <td>${money(m.monthlyFee)}</td>
+          <td>${m.phone || "-"}</td>
+          <td>
+            <button class="btn btn-soft" type="button" onclick="viewMember('${m.id}')">View</button>
+            <button class="btn btn-soft" type="button" onclick="editMember('${m.id}')">Edit</button>
+            <button class="btn btn-danger" type="button" onclick="deleteMember('${m.id}')">Delete</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderPaymentsTable(list) {
+      const tbody = document.getElementById("paymentsTable");
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="small">No payments found.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = list.map(p => `
+        <tr>
+          <td>${p.invoiceNumber || p.id || "-"}</td>
+          <td>${p.memberId || "-"}</td>
+          <td>${money(p.amount)}</td>
+          <td><span class="tag ${p.status === "PAID" ? "ok" : "warn"}">${p.status || "-"}</span></td>
+          <td>${p.paymentMethod || "-"}</td>
+          <td>
+            <button class="btn btn-soft" type="button" onclick="viewPayment('${p.id}')">View</button>
+            <button class="btn btn-soft" type="button" onclick="markPaymentPaid('${p.id}')">Mark Paid</button>
+            <button class="btn btn-danger" type="button" onclick="deletePayment('${p.id}')">Delete</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderMemberPayments(list) {
+      const tbody = document.getElementById("memberPaymentsTable");
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="small">No payments for this member.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = list.map(p => `
+        <tr>
+          <td>${p.invoiceNumber || p.id || "-"}</td>
+          <td>${money(p.amount)}</td>
+          <td><span class="tag ${p.status === "PAID" ? "ok" : "warn"}">${p.status || "-"}</span></td>
+          <td>${p.paymentMethod || "-"}</td>
+          <td>${dt(p.paymentDate)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderActivityFeed(data) {
+      const payments = data?.recentPayments || [];
+      const members = data?.recentMembers || [];
+      const feed = [];
+      payments.forEach(p => {
+        feed.push(`<div class="activity-item"><strong>Payment:</strong> ${p.invoiceNumber || p.id || "-"} • ${money(p.amount)}<div class="small">${dt(p.paymentDate)}</div></div>`);
+      });
+      members.forEach(m => {
+        feed.push(`<div class="activity-item"><strong>Member:</strong> ${m.name || "-"} joined<div class="small">${m.joinDate || "-"}</div></div>`);
+      });
+      document.getElementById("activityFeed").innerHTML = feed.join("") || "<div class='small'>No recent activity.</div>";
+    }
+
+    function renderReports(revenue, memberStats) {
+      const box = document.getElementById("reportStats");
+      box.innerHTML = [
+        ["Total Revenue", money(revenue?.totalRevenue || 0)],
+        ["Paid Payments", revenue?.paidPayments || 0],
+        ["Pending Payments", revenue?.pendingPayments || 0],
+        ["Pending Amount", money(revenue?.pendingAmount || 0)],
+        ["Collection Rate", (revenue?.collectionRate || 0).toFixed(1) + "%"]
+      ].map(([k, v]) => `<div class='stat'><div class='k'>${k}</div><div class='v'>${v}</div></div>`).join("");
+
+      const summary = document.getElementById("memberSummary");
+      summary.innerHTML = `
+        <div><strong>Total Members:</strong> ${memberStats?.totalMembers || 0}</div>
+        <div><strong>Active:</strong> ${memberStats?.activeMembers || 0}</div>
+        <div><strong>Inactive:</strong> ${memberStats?.inactiveMembers || 0}</div>
+        <div><strong>Activation Rate:</strong> ${(memberStats?.activationRate || 0).toFixed(1)}%</div>
+      `;
+    }
+
+    function showMessage(id, text, ok = true) {
+      const el = document.getElementById(id);
+      el.textContent = text;
+      el.style.color = ok ? "#0d5f3b" : "#8f1e15";
+      if (text) {
+        setTimeout(() => {
+          if (el.textContent === text) el.textContent = "";
+        }, 3200);
+      }
+    }
+
+    async function refreshDashboardData() {
       try {
-        const r = await fetch('/api/dashboard/overview');
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        const data = await r.json();
-        totalMembersEl.textContent = data.totalMembers ?? 0;
-        activeMembersEl.textContent = data.activeMembers ?? 0;
-        totalRevenueEl.textContent = (data.totalRevenue ?? 0).toFixed(2);
-        statusEl.textContent = 'Dashboard loaded successfully.';
+        const [overview, distribution, activities] = await Promise.all([
+          request("/api/dashboard/overview"),
+          request("/api/dashboard/members/distribution"),
+          request("/api/dashboard/activities/recent")
+        ]);
+        state.overview = overview || {};
+        renderDashboard();
+        renderDistribution(distribution || {});
+        renderRecentPayments(activities?.recentPayments || []);
+        renderActivityFeed(activities || {});
+        setApiStatus(true, "Connection: connected");
       } catch (e) {
-        statusEl.textContent = 'API unavailable. If MongoDB is down, this can fail until MONGO_URI is configured.';
+        setApiStatus(false, "Connection: unavailable");
       }
     }
 
     async function loadMembers() {
-      statusEl.textContent = 'Loading /api/members ...';
+      const q = document.getElementById("memberSearch").value.trim();
       try {
-        const r = await fetch('/api/members');
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        const data = await r.json();
-        statusEl.textContent = 'Members loaded: ' + data.length;
+        const data = q
+          ? await request("/api/members/search?query=" + encodeURIComponent(q))
+          : await request("/api/members");
+        state.members = data || [];
+        renderMembersTable(state.members);
+        if (state.selectedMember) {
+          const stillPresent = state.members.find(m => m.id === state.selectedMember.id);
+          if (!stillPresent) {
+            state.selectedMember = null;
+            document.getElementById("memberDetail").textContent = "Select a member to view full details.";
+            renderMemberPayments([]);
+          }
+        }
       } catch (e) {
-        statusEl.textContent = 'Members API failed. Check backend logs.';
+        renderMembersTable([]);
+        showMessage("memberMsg", "Failed to load members", false);
       }
     }
 
-    document.getElementById('refreshBtn').addEventListener('click', loadDashboard);
-    document.getElementById('membersBtn').addEventListener('click', loadMembers);
-    loadDashboard();
+    async function loadPayments() {
+      const status = document.getElementById("paymentStatusFilter").value;
+      const memberId = document.getElementById("paymentMemberIdFilter").value.trim();
+      const params = new URLSearchParams();
+      if (status) params.set("status", status);
+      if (memberId) params.set("memberId", memberId);
+      const path = "/api/payments" + (params.toString() ? "?" + params.toString() : "");
+      try {
+        const data = await request(path);
+        state.payments = data || [];
+        renderPaymentsTable(state.payments);
+      } catch (e) {
+        renderPaymentsTable([]);
+        showMessage("paymentMsg", "Failed to load payments", false);
+      }
+    }
+
+    async function loadReports() {
+      try {
+        const [revenue, memberStats] = await Promise.all([
+          request("/api/payments/stats/revenue"),
+          request("/api/members/stats/summary")
+        ]);
+        renderReports(revenue || {}, memberStats || {});
+      } catch (e) {
+        document.getElementById("reportStats").innerHTML = "<div class='small'>Failed to load report data.</div>";
+      }
+    }
+
+    async function handleMemberSubmit(ev) {
+      ev.preventDefault();
+      const id = document.getElementById("memberId").value;
+      const body = {
+        name: document.getElementById("mName").value.trim(),
+        email: document.getElementById("mEmail").value.trim(),
+        phone: document.getElementById("mPhone").value.trim(),
+        age: Number(document.getElementById("mAge").value || 0),
+        membershipPlan: document.getElementById("mPlan").value.trim(),
+        status: document.getElementById("mStatus").value,
+        monthlyFee: Number(document.getElementById("mFee").value || 0),
+        notes: document.getElementById("mNotes").value.trim()
+      };
+      try {
+        if (id) {
+          await request("/api/members/" + encodeURIComponent(id), { method: "PUT", body: JSON.stringify(body) });
+          showMessage("memberMsg", "Member updated");
+        } else {
+          await request("/api/members", { method: "POST", body: JSON.stringify(body) });
+          showMessage("memberMsg", "Member created");
+        }
+        resetMemberForm();
+        await loadMembers();
+        await refreshDashboardData();
+      } catch (e) {
+        showMessage("memberMsg", "Save failed", false);
+      }
+    }
+
+    async function handlePaymentSubmit(ev) {
+      ev.preventDefault();
+      const body = {
+        memberId: document.getElementById("pMemberId").value.trim(),
+        amount: Number(document.getElementById("pAmount").value || 0),
+        status: document.getElementById("pStatus").value,
+        paymentMethod: document.getElementById("pMethod").value,
+        invoiceNumber: document.getElementById("pInvoice").value.trim(),
+        notes: document.getElementById("pNotes").value.trim(),
+        paymentDate: new Date().toISOString()
+      };
+      try {
+        await request("/api/payments", { method: "POST", body: JSON.stringify(body) });
+        showMessage("paymentMsg", "Payment recorded");
+        document.getElementById("paymentForm").reset();
+        await loadPayments();
+        await refreshDashboardData();
+        await loadReports();
+      } catch (e) {
+        showMessage("paymentMsg", "Failed to save payment", false);
+      }
+    }
+
+    function resetMemberForm() {
+      document.getElementById("memberForm").reset();
+      document.getElementById("memberId").value = "";
+      document.getElementById("memberFormTitle").textContent = "Add Member";
+    }
+
+    window.editMember = function editMember(id) {
+      const m = state.members.find(x => x.id === id);
+      if (!m) return;
+      document.getElementById("memberId").value = m.id || "";
+      document.getElementById("mName").value = m.name || "";
+      document.getElementById("mEmail").value = m.email || "";
+      document.getElementById("mPhone").value = m.phone || "";
+      document.getElementById("mAge").value = m.age || "";
+      document.getElementById("mPlan").value = m.membershipPlan || "";
+      document.getElementById("mStatus").value = m.status || "ACTIVE";
+      document.getElementById("mFee").value = m.monthlyFee || "";
+      document.getElementById("mNotes").value = m.notes || "";
+      document.getElementById("memberFormTitle").textContent = "Edit Member";
+      viewSwitch("members");
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    };
+
+    window.viewMember = async function viewMember(id) {
+      try {
+        const member = await request("/api/members/" + encodeURIComponent(id));
+        state.selectedMember = member;
+        document.getElementById("memberDetail").innerHTML = `
+          <div><strong>ID:</strong> ${member.id || "-"}</div>
+          <div><strong>Name:</strong> ${member.name || "-"}</div>
+          <div><strong>Email:</strong> ${member.email || "-"}</div>
+          <div><strong>Phone:</strong> ${member.phone || "-"}</div>
+          <div><strong>Status:</strong> ${member.status || "-"}</div>
+          <div><strong>Plan:</strong> ${member.membershipPlan || "-"}</div>
+          <div><strong>Monthly Fee:</strong> ${money(member.monthlyFee)}</div>
+          <div><strong>Join Date:</strong> ${member.joinDate || "-"}</div>
+        `;
+        const payments = await request("/api/payments/member/" + encodeURIComponent(id));
+        renderMemberPayments(payments || []);
+      } catch (e) {
+        showMessage("memberMsg", "Failed to load member details", false);
+      }
+    };
+
+    window.deleteMember = async function deleteMember(id) {
+      if (!confirm("Delete this member?")) return;
+      try {
+        await request("/api/members/" + encodeURIComponent(id), { method: "DELETE" });
+        showMessage("memberMsg", "Member deleted");
+        await loadMembers();
+        await refreshDashboardData();
+      } catch (e) {
+        showMessage("memberMsg", "Delete failed", false);
+      }
+    };
+
+    window.markPaymentPaid = async function markPaymentPaid(id) {
+      try {
+        await request("/api/payments/" + encodeURIComponent(id) + "/status", {
+          method: "PUT",
+          body: JSON.stringify({ status: "PAID" })
+        });
+        showMessage("paymentMsg", "Payment updated");
+        await loadPayments();
+        await refreshDashboardData();
+        await loadReports();
+      } catch (e) {
+        showMessage("paymentMsg", "Status update failed", false);
+      }
+    };
+
+    window.deletePayment = async function deletePayment(id) {
+      if (!confirm("Delete this payment?")) return;
+      try {
+        await request("/api/payments/" + encodeURIComponent(id), { method: "DELETE" });
+        showMessage("paymentMsg", "Payment deleted");
+        await loadPayments();
+        await refreshDashboardData();
+        await loadReports();
+      } catch (e) {
+        showMessage("paymentMsg", "Delete failed", false);
+      }
+    };
+
+    window.viewPayment = async function viewPayment(id) {
+      try {
+        const p = await request("/api/payments/" + encodeURIComponent(id));
+        document.getElementById("paymentDetail").innerHTML = `
+          <div><strong>ID:</strong> ${p.id || "-"}</div>
+          <div><strong>Invoice:</strong> ${p.invoiceNumber || "-"}</div>
+          <div><strong>Member ID:</strong> ${p.memberId || "-"}</div>
+          <div><strong>Amount:</strong> ${money(p.amount)}</div>
+          <div><strong>Status:</strong> ${p.status || "-"}</div>
+          <div><strong>Method:</strong> ${p.paymentMethod || "-"}</div>
+          <div><strong>Payment Date:</strong> ${dt(p.paymentDate)}</div>
+          <div><strong>Created At:</strong> ${dt(p.createdAt)}</div>
+          <div><strong>Updated At:</strong> ${dt(p.updatedAt)}</div>
+          <div><strong>Notes:</strong> ${p.notes || "-"}</div>
+        `;
+      } catch (e) {
+        showMessage("paymentMsg", "Failed to load payment details", false);
+      }
+    };
+
+    function applyTheme() {
+      document.documentElement.style.setProperty("--accent", state.settings.accent);
+      document.getElementById("apiBase").value = state.settings.apiBase;
+      document.getElementById("themeAccent").value = state.settings.accent;
+    }
+
+    function bindEvents() {
+      document.getElementById("loginForm").addEventListener("submit", async (ev) => {
+        ev.preventDefault();
+        const user = document.getElementById("username").value.trim();
+        const pass = document.getElementById("password").value;
+
+        const envUser = "${ADMIN_USERNAME:admin}";
+        const envPass = "${ADMIN_PASSWORD:admin123}";
+        if ((user === "admin" && pass === "admin123") || (user === envUser && pass === envPass)) {
+          state.user = user;
+          localStorage.setItem("ironpulse.user", user);
+          document.getElementById("auth").classList.add("hidden");
+          document.getElementById("app").classList.remove("hidden");
+          document.getElementById("userLabel").textContent = "Signed in as " + user;
+          await bootstrapData();
+        } else {
+          showMessage("loginMsg", "Invalid credentials", false);
+        }
+      });
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("ironpulse.user");
+        state.user = null;
+        document.getElementById("app").classList.add("hidden");
+        document.getElementById("auth").classList.remove("hidden");
+      });
+
+      document.querySelectorAll(".nav-item[data-view]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const view = btn.dataset.view;
+          viewSwitch(view);
+          if (view === "members") await loadMembers();
+          if (view === "payments") await loadPayments();
+          if (view === "activity") {
+            const activities = await request("/api/dashboard/activities/recent").catch(() => null);
+            renderActivityFeed(activities || {});
+          }
+          if (view === "reports") await loadReports();
+        });
+      });
+
+      document.getElementById("refreshAll").addEventListener("click", async () => {
+        await bootstrapData();
+      });
+
+      document.getElementById("searchMemberBtn").addEventListener("click", loadMembers);
+      document.getElementById("loadMembersBtn").addEventListener("click", async () => {
+        document.getElementById("memberSearch").value = "";
+        await loadMembers();
+      });
+      document.getElementById("memberForm").addEventListener("submit", handleMemberSubmit);
+      document.getElementById("memberResetBtn").addEventListener("click", resetMemberForm);
+
+      document.getElementById("loadPaymentsBtn").addEventListener("click", loadPayments);
+      document.getElementById("paymentForm").addEventListener("submit", handlePaymentSubmit);
+
+      document.getElementById("refreshActivityBtn").addEventListener("click", async () => {
+        const activities = await request("/api/dashboard/activities/recent").catch(() => null);
+        renderActivityFeed(activities || {});
+      });
+
+      document.getElementById("saveSettingsBtn").addEventListener("click", () => {
+        state.settings.apiBase = document.getElementById("apiBase").value.trim();
+        state.settings.accent = document.getElementById("themeAccent").value;
+        localStorage.setItem("ironpulse.apiBase", state.settings.apiBase);
+        localStorage.setItem("ironpulse.accent", state.settings.accent);
+        applyTheme();
+        showMessage("settingsMsg", "Settings saved");
+      });
+    }
+
+    async function bootstrapData() {
+      await Promise.all([
+        refreshDashboardData(),
+        loadMembers(),
+        loadPayments(),
+        loadReports()
+      ]);
+    }
+
+    (function init() {
+      applyTheme();
+      bindEvents();
+      const remembered = localStorage.getItem("ironpulse.user");
+      if (remembered) {
+        state.user = remembered;
+        document.getElementById("auth").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+        document.getElementById("userLabel").textContent = "Signed in as " + remembered;
+        bootstrapData();
+      }
+    })();
   </script>
 </body>
 </html>

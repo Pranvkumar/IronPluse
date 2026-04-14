@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🧪 IronPulse Local Testing Suite"
+echo " IronPulse Local Testing Suite"
 echo "=================================="
 echo ""
 
@@ -37,10 +37,10 @@ test_endpoint() {
     body=$(echo "$response" | sed '$d')
     
     if [[ $http_code == 200 ]] || [[ $http_code == 201 ]]; then
-        echo -e "  ${GREEN}✅ Success (HTTP $http_code)${NC}"
+        echo -e "  ${GREEN} Success (HTTP $http_code)${NC}"
         echo "  Response: $(echo $body | jq '.' 2>/dev/null || echo $body)"
     else
-        echo -e "  ${RED}❌ Failed (HTTP $http_code)${NC}"
+        echo -e "  ${RED} Failed (HTTP $http_code)${NC}"
         echo "  Response: $(echo $body | jq '.' 2>/dev/null || echo $body)"
     fi
     echo ""
@@ -107,17 +107,17 @@ test_endpoint "GET" "/dashboard/members/distribution" "" "Member Distribution"
 test_endpoint "GET" "/dashboard/activities/recent" "" "Recent Activities"
 
 echo ""
-echo "✅ Testing complete!"
+echo " Testing complete!"
 echo ""
-echo "📊 Summary:"
-echo "  • If all tests show ${GREEN}✅${NC}, your API is working correctly"
-echo "  • If any tests show ${RED}❌${NC}, check:"
+echo " Summary:"
+echo "  • If all tests show ${GREEN}${NC}, your API is working correctly"
+echo "  • If any tests show ${RED}${NC}, check:"
 echo "    - Server is running on $API_URL"
 echo "    - MongoDB connection is active"
 echo "    - Environment variables are set"
 echo "    - Logs show any error messages"
 echo ""
-echo "💡 Next steps:"
+echo " Next steps:"
 echo "  • Deploy to Render using render.yaml"
 echo "  • Connect frontend application"
 echo "  • Set up monitoring and alerts"

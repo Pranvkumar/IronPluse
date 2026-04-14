@@ -5,7 +5,7 @@ chmod +x build-render.sh
 
 # Commit all changes to render-deployment branch
 git add -A
-git commit -m "🚀 Add Render deployment configuration
+git commit -m " Add Render deployment configuration
 
 - Add render.yaml for Render platform
 - Add Dockerfile for containerization
@@ -23,5 +23,5 @@ git commit -m "🚀 Add Render deployment configuration
 This branch preserves the original desktop version in v1.0-desktop tag
 on main branch. Render deployment uses REST API architecture."
 
-echo "✅ Deployment configuration committed!"
+echo " Deployment configuration committed!"
 git log --oneline -3

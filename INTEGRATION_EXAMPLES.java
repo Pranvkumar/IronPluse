@@ -52,19 +52,19 @@ JPanel pendingStats = StyledPanelBuilder.createStatCard(
 
 // Success alert
 JPanel successAlert = StyledPanelBuilder.createAlertPanel(
-    "✓ Member registration successful!",
+    " Member registration successful!",
     "success"
 );
 
 // Error alert
 JPanel errorAlert = StyledPanelBuilder.createAlertPanel(
-    "✗ Payment processing failed. Please try again.",
+    " Payment processing failed. Please try again.",
     "error"
 );
 
 // Warning alert
 JPanel warningAlert = StyledPanelBuilder.createAlertPanel(
-    "⚠ 5 members have pending payments",
+    " 5 members have pending payments",
     "warning"
 );
 
@@ -274,11 +274,11 @@ MongoDBConnection mongoDb = MongoDBConnection.getInstance();
 
 // Load all members
 List<Document> memberDocs = mongoDb.findAllDocuments("members");
-System.out.println("✓ Loaded " + memberDocs.size() + " members from MongoDB");
+System.out.println(" Loaded " + memberDocs.size() + " members from MongoDB");
 
 // Load all payments
 List<Document> paymentDocs = mongoDb.findAllDocuments("payments");
-System.out.println("✓ Loaded " + paymentDocs.size() + " payments from MongoDB");
+System.out.println(" Loaded " + paymentDocs.size() + " payments from MongoDB");
 
 
 // ============================================================================

@@ -1,6 +1,6 @@
 # Version Control & Rollback Procedure
 
-## 📌 Current Version Strategy
+##  Current Version Strategy
 
 **Active Versions:**
 
@@ -30,7 +30,7 @@ v1.0-desktop (tag - frozen)
 
 ---
 
-## 🏷️ Tags & Releases
+## ️ Tags & Releases
 
 ### Current Tags
 
@@ -56,7 +56,7 @@ git push origin v2.0-api
 
 ---
 
-## 🔄 Rollback Procedures
+##  Rollback Procedures
 
 ### Scenario 1: Render Deployment Issue
 
@@ -95,7 +95,7 @@ git push origin v2.0-api-hotfix
 
 **If production data is corrupted:**
 
-#### 1. Don't Panic ✅
+#### 1. Don't Panic 
 
 - MongoDB Atlas has automatic backups
 - Your API code is versioned
@@ -181,19 +181,19 @@ git merge main
 
 ---
 
-## 📊 Version Comparison
+##  Version Comparison
 
 ### Desktop (v1.0-desktop)
 
 ```
-✅ Pros:
+ Pros:
   - Standalone executable
   - Works offline
   - Local data storage (CSV)
   - JavaFX UI
   - No server required
 
-❌ Cons:
+ Cons:
   - Single user
   - Limited scalability
   - Manual backup needed
@@ -203,14 +203,14 @@ git merge main
 ### Web API (render-deployment)
 
 ```
-✅ Pros:
+ Pros:
   - Multi-user access
   - MongoDB cloud backup
   - Scalable architecture
   - REST API for integration
   - Automatic container scaling
 
-❌ Cons:
+ Cons:
   - Requires internet connection
   - Cloud database subscription
   - More complex deployment
@@ -219,7 +219,7 @@ git merge main
 
 ---
 
-## 🔄 Migration Path: Desktop → Web
+##  Migration Path: Desktop → Web
 
 If moving users from desktop to web:
 
@@ -255,7 +255,7 @@ java -cp "lib/*:dist/IronPulse.jar" migrate.MigrateToMongoDB \
 
 ---
 
-## 🎯 Release Checklist
+##  Release Checklist
 
 ### Before Creating Release Tag
 
@@ -288,7 +288,7 @@ java -cp "lib/*:dist/IronPulse.jar" migrate.MigrateToMongoDB \
 
 ---
 
-## 📋 Maintenance Tasks
+##  Maintenance Tasks
 
 ### Weekly
 
@@ -359,7 +359,7 @@ curl -I https://ironpulse-api.onrender.com/api/dashboard/overview
 
 ---
 
-## 📞 Support Contacts
+##  Support Contacts
 
 - **Render Support**: [dashboard.render.com/support](https://dashboard.render.com)
 - **MongoDB Support**: [support.mongodb.com](https://support.mongodb.com)
@@ -367,7 +367,7 @@ curl -I https://ironpulse-api.onrender.com/api/dashboard/overview
 
 ---
 
-## ✅ Backup Verification
+##  Backup Verification
 
 **Last Backup Test**: YYYY-MM-DD (UPDATE MANUALLY)
 
@@ -383,4 +383,4 @@ curl -I https://ironpulse-api.onrender.com/api/dashboard/overview
 
 ---
 
-System is production-ready with full rollback capabilities! 🎉
+System is production-ready with full rollback capabilities! 
