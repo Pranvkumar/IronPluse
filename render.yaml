@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: ironpulse-api
+    runtime: java
+    runtimeVersion: 21
+    buildCommand: bash build-render.sh
+    startCommand: java -cp "lib/*:dist/IronPulse-API.jar" com.ironpulse.IronPulseAPIApplication
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: MONGO_URI
+        fromDatabase:
+          name: ironpulse-db
+          property: connectionString
+      - key: JAVA_TOOL_OPTIONS
+        value: -Xmx512m -Xms256m
+      - key: ENVIRONMENT
+        value: production
+
+databases:
+  - name: ironpulse-db
+    databaseCluster: free
+    databaseName: ironpulse
+    user: ironpulse_user
