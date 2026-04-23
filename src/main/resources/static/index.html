@@ -676,6 +676,7 @@
       members: [],
       payments: [],
       overview: {},
+      recentActivities: {},
       selectedMember: null,
       settings: {
         apiBase: localStorage.getItem("ironpulse.apiBase") || "",
@@ -730,6 +731,20 @@
       return d.toLocaleString();
     }
 
+    function memberLabel(memberId) {
+      if (!memberId) return "Unknown member";
+      const member = state.members.find(m => m.id === memberId);
+      if (member?.name) return member.name;
+      if (/^\d+$/.test(String(memberId))) return `Member #${memberId}`;
+      return `Member ${String(memberId).slice(0, 6)}...`;
+    }
+
+    function paymentRef(payment) {
+      if (payment?.invoiceNumber) return payment.invoiceNumber;
+      if (payment?.id) return `TXN-${String(payment.id).slice(-6).toUpperCase()}`;
+      return "Payment";
+    }
+
     function setApiStatus(ok, text) {
       const chip = document.getElementById("apiStatus");
       chip.textContent = text;
@@ -778,8 +793,8 @@
       el.innerHTML = recentPayments
         .map(p => `
           <div class="activity-item">
-            <div><strong>${p.invoiceNumber || p.id || "Payment"}</strong> - ${money(p.amount)}</div>
-            <div class="small">Member: ${p.memberId || "-"} | ${dt(p.paymentDate)}</div>
+            <div><strong>${paymentRef(p)}</strong> - ${money(p.amount)}</div>
+            <div class="small">Member: ${memberLabel(p.memberId)} | ${dt(p.paymentDate)}</div>
           </div>
         `)
         .join("");
@@ -910,9 +925,11 @@
       }
 
       if (activitiesResult.status === "fulfilled") {
-        renderRecentPayments(activitiesResult.value?.recentPayments || []);
-        renderActivityFeed(activitiesResult.value || {});
+        state.recentActivities = activitiesResult.value || {};
+        renderRecentPayments(state.recentActivities?.recentPayments || []);
+        renderActivityFeed(state.recentActivities || {});
       } else {
+        state.recentActivities = {};
         renderRecentPayments([]);
         renderActivityFeed({ recentPayments: [], recentMembers: [] });
       }
@@ -935,6 +952,9 @@
           : await requestWithRetry("/api/members");
         state.members = data || [];
         renderMembersTable(state.members);
+        if (state.recentActivities?.recentPayments) {
+          renderRecentPayments(state.recentActivities.recentPayments);
+        }
         if (state.selectedMember) {
           const stillPresent = state.members.find(m => m.id === state.selectedMember.id);
           if (!stillPresent) {
