@@ -890,19 +890,39 @@
     }
 
     async function refreshDashboardData() {
-      try {
-        const [overview, distribution, activities] = await Promise.all([
-          requestWithRetry("/api/dashboard/overview"),
-          requestWithRetry("/api/dashboard/members/distribution"),
-          requestWithRetry("/api/dashboard/activities/recent")
-        ]);
-        state.overview = overview || {};
-        renderDashboard();
-        renderDistribution(distribution || {});
-        renderRecentPayments(activities?.recentPayments || []);
-        renderActivityFeed(activities || {});
+      const results = await Promise.allSettled([
+        requestWithRetry("/api/dashboard/overview"),
+        requestWithRetry("/api/dashboard/members/distribution"),
+        requestWithRetry("/api/dashboard/activities/recent")
+      ]);
+
+      const [overviewResult, distributionResult, activitiesResult] = results;
+
+      if (overviewResult.status === "fulfilled") {
+        state.overview = overviewResult.value || {};
+      }
+      renderDashboard();
+
+      if (distributionResult.status === "fulfilled") {
+        renderDistribution(distributionResult.value || {});
+      } else {
+        renderDistribution({ byPlan: {}, byStatus: {} });
+      }
+
+      if (activitiesResult.status === "fulfilled") {
+        renderRecentPayments(activitiesResult.value?.recentPayments || []);
+        renderActivityFeed(activitiesResult.value || {});
+      } else {
+        renderRecentPayments([]);
+        renderActivityFeed({ recentPayments: [], recentMembers: [] });
+      }
+
+      const failures = results.filter(result => result.status === "rejected").length;
+      if (failures === 0) {
         setApiStatus(true, "Connection: connected");
-      } catch (e) {
+      } else if (failures < results.length) {
+        setApiStatus(true, "Connection: partial");
+      } else {
         setApiStatus(false, "Connection: unavailable");
       }
     }
