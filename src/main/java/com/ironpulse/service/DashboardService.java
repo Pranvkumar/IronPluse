@@ -90,13 +90,13 @@ public class DashboardService {
         
         Map<String, Long> planDistribution = allMembers.stream()
                 .collect(Collectors.groupingBy(
-                    Member::getMembershipPlan,
+                    member -> normalizeGroupValue(member.getMembershipPlan()),
                     Collectors.counting()
                 ));
         
         Map<String, Long> statusDistribution = allMembers.stream()
                 .collect(Collectors.groupingBy(
-                    Member::getStatus,
+                    member -> normalizeGroupValue(member.getStatus()),
                     Collectors.counting()
                 ));
         
@@ -116,6 +116,7 @@ public class DashboardService {
         // Recent payments (last 10)
         List<Payment> recentPayments = paymentRepository.findAll()
                 .stream()
+            .filter(payment -> payment.getPaymentDate() != null)
                 .sorted((a, b) -> b.getPaymentDate().compareTo(a.getPaymentDate()))
                 .limit(10)
                 .collect(Collectors.toList());
@@ -123,6 +124,7 @@ public class DashboardService {
         // Recent members (last 5)
         List<Member> recentMembers = memberRepository.findAll()
                 .stream()
+            .filter(member -> member.getJoinDate() != null)
                 .sorted((a, b) -> b.getJoinDate().compareTo(a.getJoinDate()))
                 .limit(5)
                 .collect(Collectors.toList());
@@ -139,5 +141,12 @@ public class DashboardService {
     private boolean isSameDay(LocalDateTime dateTime, LocalDateTime compareWith) {
         if (dateTime == null) return false;
         return dateTime.toLocalDate().equals(compareWith.toLocalDate());
+    }
+
+    private String normalizeGroupValue(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return "UNKNOWN";
+        }
+        return value.trim();
     }
 }
